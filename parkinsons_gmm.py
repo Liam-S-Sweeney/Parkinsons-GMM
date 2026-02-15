@@ -42,7 +42,6 @@ X_scaled = scaler.fit_transform(X_df)
 scaled_df = pd.DataFrame(X_scaled, columns=target_var, index=X_df.index)
 
 # Visual Representation of standardized data
-
 g = sns.pairplot(
     data=scaled_df, 
     diag_kind='kde'
@@ -55,7 +54,7 @@ bic, aic = [], []
 gmms = {}
 
 for k in range(1, 11):
-    gmm_k = GaussianMixture(n_components=k, covariance_type='full', random_state=42)
+    gmm_k = GaussianMixture(n_components=k, covariance_type='full')
     gmm_k.fit(X_scaled)
     bic.append(gmm_k.bic(X_scaled))
     aic.append(gmm_k.aic(X_scaled))
@@ -68,7 +67,7 @@ bic_std = bic.std()
 acceptable = np.where(bic <= bic_min + bic_std)[0] + 1
 print("Acceptable K values:", acceptable)
 
-best_k = int(np.argmin(bic)) + 1   # since k starts at 1
+best_k = int(np.argmin(bic)) + 1  
 best_gmm = gmms[best_k]
 
 means = best_gmm.means_
