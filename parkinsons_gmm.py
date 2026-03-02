@@ -54,7 +54,7 @@ bic, aic = [], []
 gmms = {}
 
 for k in range(1, 11):
-    gmm_k = GaussianMixture(n_components=k, covariance_type='full')
+    gmm_k = GaussianMixture(n_components=k, covariance_type='full', n_init=10)
     gmm_k.fit(X_scaled)
     bic.append(gmm_k.bic(X_scaled))
     aic.append(gmm_k.aic(X_scaled))
